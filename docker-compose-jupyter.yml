@@ -1,6 +1,10 @@
 services:
   slurmjupyter:
+        build:
+            context: jupyter
+            dockerfile: Dockerfile
         image: slurm-jupyter:19.05.5-1
+        container_name: headnode
         hostname: slurmjupyter
         user: admin
         volumes:
@@ -8,7 +12,11 @@ services:
         ports:
                 - 8888:8888
   slurmmaster:
+        build:
+            context: master
+            dockerfile: Dockerfile
         image: slurm-master:19.05.5-1
+        container_name: master
         hostname: slurmmaster
         user: admin
         volumes:
@@ -18,7 +26,11 @@ services:
                 - 6818:6818
                 - 6819:6819
   slurmnode1:
+        build:
+            context: node
+            dockerfile: Dockerfile
         image: slurm-node:19.05.5-1
+        container_name: node1
         hostname: slurmnode1
         user: admin
         volumes:
@@ -27,6 +39,7 @@ services:
                 - slurmmaster
   slurmnode2:
         image: slurm-node:19.05.5-1
+        container_name: node2
         hostname: slurmnode2
         user: admin
         volumes:
@@ -35,6 +48,7 @@ services:
                 - slurmmaster
   slurmnode3:
         image: slurm-node:19.05.5-1
+        container_name: node3
         hostname: slurmnode3
         user: admin
         volumes:

@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+#FROM ubuntu:20.04
+FROM et-cluster
 
 RUN apt update -y && apt install munge -y && apt install vim -y && apt install build-essential -y && apt install git -y && apt-get install mariadb-server -y && apt install wget -y
 
@@ -12,6 +13,6 @@ COPY docker-entrypoint.sh /etc/slurm-llnl/
 
 EXPOSE 6817 6818 6819  
 
-RUN apt update -y && apt install libopenmpi-dev -y && pip3 install mpi4py
+# RUN apt update -y && apt install libopenmpi-dev -y && pip3 install mpi4py
 
 ENTRYPOINT ["/etc/slurm-llnl/docker-entrypoint.sh"]

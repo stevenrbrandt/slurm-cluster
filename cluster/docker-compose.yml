@@ -1,0 +1,19 @@
+version: '3'
+
+#volumes:
+#    home_cluster:
+
+services:
+
+  cluster-service:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: et-cluster
+    hostname: cluster-host
+    container_name: cluster
+    #ports:
+    #  - 8888:8888
+    #volumes:
+    #  - home_cluster:/home
+    entrypoint: sleep infinity

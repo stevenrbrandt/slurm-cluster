@@ -1,0 +1,17 @@
+# Copyright (c) 2019 Steven R. Brandt, and Roland Haas
+#
+# Distributed under the LGPL
+
+# It is possible to use a later version of Ubuntu,
+# however, if one does that then a Singularity version
+# of the image will not run on Shelob and other clusters
+# with older linux kernels.
+FROM ubuntu:20.04
+
+USER root
+ENV PYVER 3.9
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update per release
+ENV ET_RELEASE ET_2023_05
+ENV KUIBIT_RELEASE 1.4.0

@@ -3,24 +3,28 @@ services:
         build:
             context: jupyter
             dockerfile: Dockerfile
-        image: slurm-jupyter:19.05.5-1
+        image: stevenrbrandt/slurm-jupyter
         container_name: headnode
         hostname: slurmjupyter
-        user: admin
-        volumes:
-                - shared-vol:/home/admin
+        #user: admin
+        user: root
+        # entrypoint: sleep infinity
         ports:
-                - 8888:8888
+            - 9443:443
+        volumes:
+            - shared-vol:/home
+            - ./etc/ssl:/install
+            - ./users:/users
   slurmmaster:
         build:
             context: master
             dockerfile: Dockerfile
-        image: slurm-master:19.05.5-1
+        image: stevenrbrandt/slurm-master
         container_name: master
         hostname: slurmmaster
         user: admin
         volumes:
-                - shared-vol:/home/admin
+                - shared-vol:/home
         ports:
                 - 6817:6817
                 - 6818:6818
@@ -29,30 +33,30 @@ services:
         build:
             context: node
             dockerfile: Dockerfile
-        image: slurm-node:19.05.5-1
+        image: stevenrbrandt/slurm-node
         container_name: node1
         hostname: slurmnode1
         user: admin
         volumes:
-                - shared-vol:/home/admin
+                - shared-vol:/home
         links:
                 - slurmmaster
   slurmnode2:
-        image: slurm-node:19.05.5-1
+        image: stevenrbrandt/slurm-node
         container_name: node2
         hostname: slurmnode2
         user: admin
         volumes:
-                - shared-vol:/home/admin
+                - shared-vol:/home
         links:
                 - slurmmaster
   slurmnode3:
-        image: slurm-node:19.05.5-1
+        image: stevenrbrandt/slurm-node
         container_name: node3
         hostname: slurmnode3
         user: admin
         volumes:
-                - shared-vol:/home/admin
+                - shared-vol:/home
         links:
                 - slurmmaster
 volumes:

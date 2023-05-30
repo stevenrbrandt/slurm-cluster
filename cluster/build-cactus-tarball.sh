@@ -16,10 +16,15 @@ curl -kLO https://raw.githubusercontent.com/gridaphobe/CRL/${ET_RELEASE}/GetComp
 chmod a+x GetComponents
 ./GetComponents --parallel https://bitbucket.org/einsteintoolkit/manifest/raw/${ET_RELEASE}/einsteintoolkit.th
 cd ~/Cactus
+tar xzvf ~etuser/sim.tgz
 ./simfactory/bin/sim setup-silent
 #echo 'LIBDIRS = /lib/x86_64-linux-gnu' >> repos/simfactory2/mdb/optionlists/generic.cfg
 export LD_LIBRARY_PATH=/lib/x86_64-linux-gnu
 ./simfactory/bin/sim build -j$(($NCPUS/2)) --thornlist ../einsteintoolkit.th
+
+# Override for the machine that we want
+cp simfactory/mdb/runscripts/slurmjupyter.run configs/sim/RunScript
+cp simfactory/mdb/submitscripts/slurmjupyter.sub configs/sim/SubmitScript
 
 ls ./exe/cactus_sim
 

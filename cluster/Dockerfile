@@ -61,6 +61,10 @@ RUN pip3 install jupyter \
 COPY build-cactus-tarball.sh /usr/local/bin/build-cactus-tarball.sh
 RUN useradd -m etuser -u 10000 -d /usr/etuser
 WORKDIR /usr/etuser
+
+# Until the defs get added to simfactory
+COPY sim.tgz /usr/etuser/
+
 RUN bash /usr/local/bin/build-cactus-tarball.sh
 
 WORKDIR /

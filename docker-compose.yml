@@ -8,12 +8,12 @@ services:
         hostname: slurmjupyter
         #user: admin
         user: root
-        # entrypoint: sleep infinity
+        #entrypoint: sleep infinity
         ports:
-            - 9443:443
+            - 443:443
         volumes:
             - shared-vol:/home
-            - ./etc/ssl:/install
+            - /etc/pki-cluster:/install
             - ./users:/users
   slurmmaster:
         build:

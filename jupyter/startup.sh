@@ -12,14 +12,14 @@ done
 if [ -r /install/certs/etk.cct.lsu.edu.cer ]
 then
    mkdir -p /etc/ssl/certs
-   cp /certs/etk.cct.lsu.edu.cer /etc/ssl/certs/etk.cct.lsu.edu.cer
+   cp /install/certs/etk.cct.lsu.edu.cer /etc/ssl/certs/etk.cct.lsu.edu.cer
 fi
 
-if [ -r /install/privateetk.cct.lsu.edu.key ]
+if [ -r /install/private/etk.cct.lsu.edu.key ]
 then
    mkdir -p /etc/ssl/private
    chmod 700 /etc/ssl/private
-   cp /install/private/etk.cct.lus.edu.key /etc/ssl/private/etk.cct.lsu.edu.key
+   cp /install/private/etk.cct.lsu.edu.key /etc/ssl/private/etk.cct.lsu.edu.key
 fi
 
 sudo service munge start

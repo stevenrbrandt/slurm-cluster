@@ -13,7 +13,7 @@ RUN apt update -y && apt install nodejs -y && npm install -g configurable-http-p
 
 COPY slurm.conf /etc/slurm-llnl/
 COPY cgroup.conf /etc/slurm-llnl/
-COPY notebooks/*.ipynb /etc/skel
+COPY notebooks/*.ipynb /etc/skel/
 COPY docker-entrypoint.sh /etc/slurm-llnl/
 
 WORKDIR /home/admin
@@ -37,7 +37,7 @@ COPY startup.sh /startup.sh
 WORKDIR /
 COPY mkcerts.sh /
 COPY cert-info.txt /
-RUN bash ./mkcerts.sh
+# RUN bash ./mkcerts.sh
 COPY login.html /usr/local/share/jupyterhub/templates/login.html
 COPY ein.png /usr/local/share/jupyterhub/static/images/ein.png
 RUN curl -L https://raw.githubusercontent.com/stevenrbrandt/workenv/master/bin/untar.py -o /usr/local/bin/untar.py

@@ -27,8 +27,9 @@ RUN apt-get -qq update && \
         libnuma-dev numactl hwloc libhwloc-dev libssl-dev python3-pyudev libudev-dev \
         hdf5-tools gdb gsl-bin libgsl0-dev python3-setuptools cmake libboost-dev \
         ffmpeg imagemagick libgsl-dev libopenblas-dev libpapi-dev fftw3-dev \
-        liblapack-dev vim emacs nano openssh-client pkg-config \
-        libpython${PYVER}-dev libpython${PYVER}-dbg rsync vim nano && \
+        liblapack-dev vim emacs nano openssh-client pkg-config libpmi0 \
+        libpython${PYVER}-dev libpython${PYVER}-dbg rsync vim nano \
+        libpmi1-pmix libpmi2-pmix libpmix-dev libpmix2 libopenmpi-dev libopenmpi3 libpmi-pmix-dev && \
     apt-get -qq clean all && \
     apt-get -qq autoclean && \
     apt-get -qq autoremove && \
@@ -60,12 +61,14 @@ RUN pip3 install jupyter \
 
 COPY build-cactus-tarball.sh /usr/local/bin/build-cactus-tarball.sh
 RUN useradd -m etuser -u 10000 -d /usr/etuser
+USER etuser
 WORKDIR /usr/etuser
 
 # Until the defs get added to simfactory
 COPY sim.tgz /usr/etuser/
 
 RUN bash /usr/local/bin/build-cactus-tarball.sh
+USER root
 
 WORKDIR /
 

@@ -1,0 +1,6 @@
+--realm=SLURM-CLUSTER.TEST
+--ds-password=%uFFe9Fx4fL6
+--admin-password=78E#s5gcy8HN
+--mkhomedir
+--no-ntp
+--unattended

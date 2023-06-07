@@ -1,19 +1,34 @@
 services:
+  ldap:
+        build:
+            context: ldap
+            dockerfile: Dockerfile.fedora-38
+        image: stevenrbrandt/slurm-ldap
+        container_name: ldap
+        hostname: slurmldap.slurm-cluster.test
+        user: root
+        ports:
+            - 8443:443
+        volumes:
+                - shared-vol:/home
+                - ./ldap-data:/data
+        links:
+                - slurmmaster
   slurmjupyter:
         build:
             context: jupyter
             dockerfile: Dockerfile
         image: stevenrbrandt/slurm-jupyter
         container_name: headnode
-        hostname: slurmjupyter
+        hostname: slurmjupyter.slurm-cluster.test
         #user: admin
         user: root
         #entrypoint: sleep infinity
         ports:
-            - 443:443
+            - 9443:443
         volumes:
             - shared-vol:/home
-            - /etc/pki-cluster:/install
+            - ./jupyter/etc/ssl:/install
             - ./users:/users
   slurmmaster:
         build:
@@ -21,7 +36,7 @@ services:
             dockerfile: Dockerfile
         image: stevenrbrandt/slurm-master
         container_name: master
-        hostname: slurmmaster
+        hostname: slurmmaster.slurm-cluster.test
         user: admin
         volumes:
                 - shared-vol:/home
@@ -35,7 +50,7 @@ services:
             dockerfile: Dockerfile
         image: stevenrbrandt/slurm-node
         container_name: node1
-        hostname: slurmnode1
+        hostname: slurmnode1.slurm-cluster.test
         user: admin
         volumes:
                 - shared-vol:/home
@@ -53,12 +68,13 @@ services:
   slurmnode3:
         image: stevenrbrandt/slurm-node
         container_name: node3
-        hostname: slurmnode3
+        hostname: slurmnode3.slurm-cluster.test
         user: admin
         volumes:
                 - shared-vol:/home
         links:
                 - slurmmaster
+
 volumes:
         shared-vol:
 

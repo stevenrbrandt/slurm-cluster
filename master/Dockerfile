@@ -1,8 +1,6 @@
 #FROM ubuntu:20.04
 FROM et-cluster
 
-RUN apt update -y && apt install munge -y && apt-get install mariadb-server -y
-
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt install slurmd slurm-client slurmctld -y
 RUN apt install sudo -y && apt install python3.9 python3-pip -y && useradd -m admin -s /usr/bin/bash -d /home/admin && echo "admin:admin" | chpasswd && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers 

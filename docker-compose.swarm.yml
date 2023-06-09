@@ -10,8 +10,15 @@ services:
         #user: admin
         user: root
         #entrypoint: sleep infinity
+        #networks:
+        #    - slurm-net
         ports:
             - 443:443
+        deploy:
+            replicas: 1
+            placement:
+                constraints:
+                    - node.labels.node.type == head
         volumes:
             #- shared-vol:/home
             - /srv/nfs4/etk/home:/home
@@ -25,6 +32,13 @@ services:
         container_name: master
         hostname: slurmmaster
         user: admin
+        #networks:
+        #    - slurm-net
+        deploy:
+            replicas: 1
+            placement:
+                constraints:
+                    - node.labels.node.type == head
         volumes:
                 #- shared-vol:/home
                 - /srv/nfs4/etk/home:/home
@@ -40,6 +54,13 @@ services:
         container_name: node1
         hostname: slurmnode1
         user: admin
+        #networks:
+        #    - slurm-net
+        deploy:
+            replicas: 1
+            placement:
+                constraints:
+                    - node.labels.node.type == node1
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
@@ -50,6 +71,13 @@ services:
         container_name: node2
         hostname: slurmnode2
         user: admin
+        #networks:
+        #    - slurm-net
+        deploy:
+            replicas: 1
+            placement:
+                constraints:
+                    - node.labels.node.type == node2
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
@@ -60,6 +88,13 @@ services:
         container_name: node3
         hostname: slurmnode3
         user: admin
+        #networks:
+        #    - slurm-net
+        deploy:
+            replicas: 1
+            placement:
+                constraints:
+                    - node.labels.node.type == node3
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
@@ -67,3 +102,7 @@ services:
                 - slurmmaster
 volumes:
     shared-vol:
+
+#networks:
+#  slurm-net:
+#    external: true

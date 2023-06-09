@@ -5,7 +5,7 @@ sudo sed -i "s/REPLACE_IT/CPUs=$(nproc)/g" /etc/slurm-llnl/slurm.conf
 
 echo "START SERVICES"
 sudo service munge start
-sudo slurmd -N $(hostname)
+sudo service slurmd start #-N $(hostname)
 
 echo "RELINK"
 sudo bash /relink.sh

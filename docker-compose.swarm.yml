@@ -1,6 +1,6 @@
 version: '3'
 services:
-  slurmjupyter:
+  slurm-jupyter:
         build:
             context: jupyter
             dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
             - /srv/nfs4/etk/home:/home
             - /etc/pki-cluster:/install
             - ./users:/users
-  slurmmaster:
+  slurm-master:
         build:
             context: master
             dockerfile: Dockerfile
@@ -46,7 +46,7 @@ services:
         #        - 6817:6817
         #        - 6818:6818
         #        - 6819:6819
-  slurmnode1:
+  slurm-node1:
         build:
             context: node
             dockerfile: Dockerfile
@@ -66,7 +66,7 @@ services:
                 - /etk/home:/home
         links:
                 - slurmmaster
-  slurmnode2:
+  slurm-node2:
         image: stevenrbrandt/slurm-node
         container_name: node2
         hostname: slurmnode2
@@ -83,7 +83,7 @@ services:
                 - /etk/home:/home
         links:
                 - slurmmaster
-  slurmnode3:
+  slurm-node3:
         image: stevenrbrandt/slurm-node
         container_name: node3
         hostname: slurmnode3

@@ -5,7 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt install slurm-client -y
 RUN apt install curl dirmngr apt-transport-https lsb-release ca-certificates -y
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install sudo -y && apt install python3.9 python3-pip -y && useradd -m admin -s /bin/bash -d /home/admin && echo "admin:admin" | chpasswd && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN apt install sudo -y && useradd -m admin -s /bin/bash -d /home/admin && echo "admin:admin" | chpasswd && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 RUN df -h
 RUN apt install nodejs -y

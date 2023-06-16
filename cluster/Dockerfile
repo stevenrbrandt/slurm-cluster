@@ -29,6 +29,7 @@ RUN apt-get -qq update && \
         ffmpeg imagemagick libgsl-dev libopenblas-dev libpapi-dev fftw3-dev \
         liblapack-dev vim emacs nano openssh-client pkg-config libpmi0 \
         libpython${PYVER}-dev libpython${PYVER}-dbg rsync vim nano \
+        libscalapack-openmpi-dev \
         libpmi1-pmix libpmi2-pmix libpmix-dev libpmix2 libopenmpi-dev libopenmpi3 libpmi-pmix-dev && \
     apt-get -qq clean all && \
     apt-get -qq autoclean && \
@@ -75,16 +76,12 @@ WORKDIR /
 
 ENV PKG_CONFIG_PATH /usr/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig
 
-RUN python3 -m pip install scons termcolor kuibit==${KUIBIT_RELEASE} mpld3 clang_format sympy nrpylatex
+RUN python3 -m pip install scons termcolor kuibit==${KUIBIT_RELEASE} mpld3 clang_format sympy nrpylatex core-watpy
 RUN apt-get update -y
 RUN apt-get install -y pgplot5 
 
-RUN mkdir -p /tutorial && chmod 755 /tutorial
 RUN mkdir -p /jupyter-et && chmod 755 /jupyter-et
 COPY Initial_Data.tgz /usr/local/data/
-COPY notebooks/*.ipynb /tutorial/
-COPY notebooks/*.ipynb /etc/skel/
-RUN chmod og+r /tutorial/* /etc/skel/* /usr/local/data/Initial_Data.tgz
 
 ### CarpetX stuff
 
@@ -241,7 +238,8 @@ RUN apt install -y libboost-all-dev
 USER etuser
 WORKDIR /usr/etuser
 # COPY carpetx.th ./
-RUN curl -LO https://raw.githubusercontent.com/jaykalinani/AsterX/main/Docs/thornlist/asterx.th
+RUN curl -LO https://raw.githubusercontent.com/jaykalinani/AsterX/ETX_2023_06/Docs/thornlist/asterx.th
+COPY carpetx.cfg ./
 COPY build-carpetx.sh ./
 RUN bash ./build-carpetx.sh
 WORKDIR /usr/etuser/CarpetX
@@ -250,6 +248,19 @@ RUN bash /usr/local/bin//make-tarball.sh
 USER root
 RUN mkdir -p /home/root
 RUN perl -p -i -e 's{:/root:}{:/home/root:}' /etc/passwd
-RUN apt update -y && apt install munge mariadb-server -y
+RUN apt update -y && apt install munge mariadb-server git-lfs libscalapack-openmpi-dev -y
 WORKDIR /etc/skel
 RUN git clone https://github.com/GRChombo/engrenage.git && rm -fr engrenage/.git
+RUN mkdir -p /tutorial && chmod 755 /tutorial
+COPY notebooks/*.ipynb /tutorial/
+RUN chmod og+r /tutorial/* /etc/skel/* /usr/local/data/Initial_Data.tgz
+COPY core-gitlfs-tpi-uni-jena-de.pem /etc/certs/
+COPY notebooks/*.ipynb /etc/skel/
+COPY et-setup.py /usr/local/lib/
+WORKDIR /etc/skel/CoReDB_tutorial
+COPY CoReDB_tutorial/watpy_CoReDB.ipynb ./
+WORKDIR /etc/skel/CoReDB_tutorial/MySim_THC_135135
+COPY CoReDB_tutorial/MySim_THC_135135/mp_Psi4* ./
+WORKDIR /etc/skel
+RUN find . -type f | xargs chmod og+r 
+RUN find . -type d | xargs chmod og+rx

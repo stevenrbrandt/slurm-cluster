@@ -28,7 +28,7 @@ EXPOSE 8888
 #ENTRYPOINT ["/etc/slurm-llnl/docker-entrypoint.sh"]
 RUN pip3 install oauthenticator tornado python-oauth2 jupyterhub-dummyauthenticator mpld3
 
-RUN pip3 install git+https://github.com/stevenrbrandt/cyolauthenticator
+RUN pip3 install git+https://github.com/stevenrbrandt/cyolauthenticator@v1.2
 RUN pip3 install randpass
 COPY error-cyol.html /usr/local/share/jupyterhub/templates/error.html
 COPY jup-config-cyol.py /jup-config.py

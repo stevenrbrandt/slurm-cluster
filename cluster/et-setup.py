@@ -25,3 +25,5 @@ except ModuleNotFoundError: pass
 import os, sys
 os.environ["PYTHONUSERBASE"] = os.environ['HOME'] + "/Cactus/python"
 sys.path.insert(1, f"{os.environ['PYTHONUSERBASE']}/lib/python{sys.version_info[0]}.{sys.version_info[1]}/site-packages")
+pyver="%d.%d" % (sys.version_info.major, sys.version_info.minor)
+sys.path.insert(1,f"/usr/local/lib/python{pyver}/site-packages")

@@ -59,7 +59,8 @@ RUN pip3 install jupyter \
     scipy \
     h5py \
     scrolldown \
-    dumb-init
+    dumb-init \
+    celluloid
 
 COPY build-cactus-tarball.sh /usr/local/bin/build-cactus-tarball.sh
 RUN useradd -m etuser -u 10000 -d /usr/etuser

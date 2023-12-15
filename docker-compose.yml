@@ -1,5 +1,25 @@
 version: '3'
 services:
+
+  ldap:
+        build:
+            context: ldap
+            dockerfile: Dockerfile
+        image: stevenrbrandt/ldapserverimage
+        hostname: ldap.etk.lsu.edu
+        container_name: ldap
+        env_file:
+            - ldap-vars.env
+
+        # Persisting these directories will
+        # persist your ldap database.
+        #volumes:
+        #    - ldap_data:/var/lib/ldap
+        #    - slapd_data:/etc/ldap/slapd.d
+        #ports:
+        #    - 389:389
+        #    - 636:636
+
   slurmjupyter:
         build:
             context: jupyter
@@ -9,7 +29,9 @@ services:
         hostname: slurmjupyter
         #user: admin
         user: root
-        #entrypoint: sleep infinity
+        entrypoint: sleep infinity
+        env_file:
+            - ldap-vars.env
         ports:
             - 443:443
         volumes:
@@ -25,6 +47,8 @@ services:
         container_name: master
         hostname: slurmmaster
         user: admin
+        env_file:
+            - ldap-vars.env
         volumes:
                 #- shared-vol:/home
                 - /srv/nfs4/etk/home:/home
@@ -40,6 +64,8 @@ services:
         container_name: node1
         hostname: slurmnode1
         user: admin
+        env_file:
+            - ldap-vars.env
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
@@ -50,6 +76,8 @@ services:
         container_name: node2
         hostname: slurmnode2
         user: admin
+        env_file:
+            - ldap-vars.env
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
@@ -60,6 +88,8 @@ services:
         container_name: node3
         hostname: slurmnode3
         user: admin
+        env_file:
+            - ldap-vars.env
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
@@ -67,3 +97,5 @@ services:
                 - slurmmaster
 volumes:
     shared-vol:
+    ldap_data:
+    slapd_data:

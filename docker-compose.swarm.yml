@@ -64,8 +64,8 @@ services:
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
-        links:
-                - slurmmaster
+        #links:
+        #        - slurmmaster
   slurm-node2:
         image: stevenrbrandt/slurm-node
         container_name: node2
@@ -81,8 +81,8 @@ services:
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
-        links:
-                - slurmmaster
+        #links:
+        #        - slurmmaster
   slurm-node3:
         image: stevenrbrandt/slurm-node
         container_name: node3
@@ -98,8 +98,8 @@ services:
         volumes:
                 #- shared-vol:/home
                 - /etk/home:/home
-        links:
-                - slurmmaster
+        #links:
+        #        - slurmmaster
 volumes:
     shared-vol:
 

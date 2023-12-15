@@ -36,8 +36,12 @@ RUN apt-get -qq update && \
     apt-get -qq autoremove && \
     rm -rf /var/lib/apt/lists/*
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
-RUN update-alternatives --install /bin/cpp cpp /usr/bin/cpp-10 10
+RUN update-ca-certificates
+#- update /etc/ssl/certs and ca-certificates.crt
+
+#RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+RUN rm -f /usr/bin/cpp
+RUN update-alternatives --install /usr/bin/cpp cpp /usr/bin/cpp-10 10
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
 RUN update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-10 10
@@ -265,3 +269,7 @@ COPY CoReDB_tutorial/MySim_THC_135135/mp_Psi4* ./
 WORKDIR /etc/skel
 RUN find . -type f | xargs chmod og+r 
 RUN find . -type d | xargs chmod og+rx
+#COPY sssd.conf.sh /usr/local/bin/
+#RUN echo services: files sss >> /etc/nsswitch.conf
+RUN apt install sudo -y && useradd -m admin -s /usr/bin/bash -d /home/admin && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+COPY start-ldap.sh /usr/local/bin/

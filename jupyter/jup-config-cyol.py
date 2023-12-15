@@ -70,7 +70,7 @@ def pre_spawn_hook(spawner):
 c.Spawner.pre_spawn_hook = pre_spawn_hook
 
 c.JupyterHub.template_paths = ['/jinja/templates']
-c.CILogonOAuthenticator.scope = ['openid','email','org.cilogon.userinfo']
+#c.CILogonOAuthenticator.scope = ['openid','email','org.cilogon.userinfo']
 
 # To create your own certs
 # openssl genrsa -out rootCA.key 2048

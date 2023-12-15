@@ -24,7 +24,7 @@ fi
 
 sudo service munge start
 randpass MND | grep pass: | cut -f2 -d: | sed 's/\s//g' > /usr/enable_mkuser
-echo "STARTUP CODE:$(cat /usr/enable_mkuser)"
+echo "STARTUP CODE: $(cat /usr/enable_mkuser)"
 
 cd /
 

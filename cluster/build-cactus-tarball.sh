@@ -17,6 +17,7 @@ chmod a+x GetComponents
 ./GetComponents --parallel https://bitbucket.org/einsteintoolkit/manifest/raw/${ET_RELEASE}/einsteintoolkit.th
 cd ~/Cactus
 tar xzvf ~etuser/sim.tgz
+echo slurmjupyter > ~/.hostname
 ./simfactory/bin/sim setup-silent
 #echo 'LIBDIRS = /lib/x86_64-linux-gnu' >> repos/simfactory2/mdb/optionlists/generic.cfg
 export LD_LIBRARY_PATH=/lib/x86_64-linux-gnu

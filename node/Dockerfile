@@ -3,7 +3,6 @@ FROM et-cluster
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt install slurmd slurm-client -y
-RUN apt install sudo -y && useradd -m admin -s /usr/bin/bash -d /home/admin && echo "admin:admin" | chpasswd && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 COPY slurm.conf /etc/slurm-llnl/
 COPY cgroup.conf /etc/slurm-llnl/

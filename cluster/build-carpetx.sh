@@ -6,5 +6,6 @@ chmod a+x GetComponents
 #curl -o carpetx.cfg -L https://raw.githubusercontent.com/stevenrbrandt/CarpetX/main/scripts/actions-cpu-real64.cfg
 perl GetComponents --root CarpetX asterx.th
 cd ./CarpetX
+echo slurmjupyter > ~/.hostname
 ./simfactory/bin/sim setup-silent
 ./simfactory/bin/sim build -j10 --thornlist ~/asterx.th --optionlist ~/carpetx.cfg

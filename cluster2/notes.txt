@@ -1,0 +1,16 @@
+munge is very important to get right or slurm won't work. For this purpose, relink.sh now distributes the munge key as well as passwd, group, and shadow.
+
+If a user's login gets corrupted and they can't get on the system:
+
+  jupyter lab --generate-config
+
+Should fix things.
+
+The command
+
+  docker swarm join-token worker
+
+Will spit out a command that can be used by worker nodes to join the swarm.
+The "head node" will have to do this:
+
+  docker node update --label-add node.type=head etk1.cct.lsu.edu

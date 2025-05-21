@@ -13,7 +13,7 @@ ENV PYVER 3.8
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update per release
-ENV ET_RELEASE ET_2023_05
+ENV ET_RELEASE ET_2024_11
 ENV KUIBIT_RELEASE 1.4.0
 
 # Including --no-install-recommends does help optimize

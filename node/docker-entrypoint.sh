@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "UPDATE SLURM.CONF"
-sudo sed -i "s/REPLACE_IT/CPUs=$(nproc)/g" /etc/slurm-llnl/slurm.conf
+sudo sed -i "s/REPLACE_IT/CPUs=$(nproc)/g" /etc/slurm/slurm.conf
 
 echo "START SERVICES"
 sudo service munge start

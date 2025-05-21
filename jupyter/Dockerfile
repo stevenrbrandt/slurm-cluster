@@ -2,19 +2,20 @@
 FROM et-cluster
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt install slurm-client -y
+#RUN apt install slurm-client -y
+#RUN apt install -y libpmix-bin libpmix-dev libpmix2
 RUN apt install curl dirmngr apt-transport-https lsb-release ca-certificates -y
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
 #RUN apt install sudo -y && useradd -m admin -s /bin/bash -d /home/admin && echo "admin:admin" | chpasswd && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 RUN df -h
 RUN apt install nodejs -y
 RUN npm install -g configurable-http-proxy
 
-COPY slurm.conf /etc/slurm-llnl/
-COPY cgroup.conf /etc/slurm-llnl/
+#COPY slurm.conf /etc/slurm/
+#COPY cgroup.conf /etc/slurm/
 #COPY notebooks/*.ipynb /etc/skel/
-COPY docker-entrypoint.sh /etc/slurm-llnl/
+COPY docker-entrypoint.sh /etc/slurm/
 
 WORKDIR /home/admin
 
@@ -42,4 +43,7 @@ COPY login.html /usr/local/share/jupyterhub/templates/login.html
 COPY ein.png /usr/local/share/jupyterhub/static/images/ein.png
 RUN curl -L https://raw.githubusercontent.com/stevenrbrandt/workenv/master/bin/untar.py -o /usr/local/bin/untar.py
 RUN chmod 755 /usr/local/bin/untar.py
+
+#COPY --chown=munge munge.key /etc/munge/munge.key
+#RUN chmod 400  /etc/munge/munge.key
 CMD ["bash","/startup.sh"]

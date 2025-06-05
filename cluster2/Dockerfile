@@ -21,7 +21,7 @@ RUN apt-get -qq update && \
         ffmpeg imagemagick libgsl-dev libopenblas-dev libpapi-dev fftw3-dev \
         liblapack-dev vim emacs nano openssh-client pkg-config \
         libpython${PYVER}-dev libpython${PYVER}-dbg rsync vim nano \
-        apt-file lbzip2 xz-utils pgplot5
+        apt-file lbzip2 xz-utils pgplot5 cpio python${PYVER}-venv
 
 RUN update-ca-certificates
 
@@ -44,7 +44,7 @@ RUN pip3 install jupyter \
     h5py \
     dumb-init \
     celluloid \
-    kuibit \
+    kuibit==1.5.0 \
     termcolor \
     scons \
     clang_format \
@@ -55,6 +55,7 @@ RUN pip3 install jupyter \
     core-watpy \
     multimethod \
     pdoc \
+    polars \
     oauthenticator==15.1.0 \
     jupyterhub==4.1.5
 
@@ -73,40 +74,39 @@ RUN mkdir -p /jupyter-et && chmod 755 /jupyter-et
 #COPY Initial_Data.tgz /usr/local/data/
 
 # Install dependencies with Spack
-ENV SPACK_SKIP_MODULES 1
-ENV SPACK_ROOT /usr/spack-root
-ENV PATH $SPACK_ROOT/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+#ENV SPACK_SKIP_MODULES 1
+#ENV SPACK_ROOT /usr/spack-root
+#ENV PATH $SPACK_ROOT/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 COPY spack-setup.sh .
 RUN chmod 755 spack-setup.sh
-RUN ./spack-setup.sh
+#RUN ./spack-setup.sh
 
-RUN ${SPACK_ROOT}/bin/spack external find --not-buildable perl diffutils findutils tar pkgconf fortran
+#RUN ${SPACK_ROOT}/bin/spack external find --not-buildable perl diffutils findutils tar pkgconf fortran python
 
-ENV AMREX_VER 25.02 +shared +particles build_type=RelWithDebInfo +openmp
+#ENV AMREX_VER 25.02 +shared +particles build_type=RelWithDebInfo +openmp
 
-ENV BASE=/usr
-ENV SPACK_ENV_NAME=cactus-tutorial
-RUN ${SPACK_ROOT}/bin/spack env create $SPACK_ENV_NAME
+#ENV BASE=/usr
+#ENV SPACK_ENV_NAME=cactus-tutorial
+#RUN ${SPACK_ROOT}/bin/spack env create $SPACK_ENV_NAME
 
-# Avoid having multiple versions of packages
-RUN spack -e $SPACK_ENV_NAME config add concretizer:reuse:true
-RUN spack -e $SPACK_ENV_NAME config add concretizer:unify:true
+## Avoid having multiple versions of packages
+#RUN spack -e $SPACK_ENV_NAME config add concretizer:reuse:true
+#RUN spack -e $SPACK_ENV_NAME config add concretizer:unify:true
 
-RUN spack -e $SPACK_ENV_NAME add netlib-lapack gsl silo+hdf5 hdf5+hl+fortran+cxx+mpi mpich openssl fftw papi protobuf hwloc adios2+hdf5 boost+  system+filesystem googletest gperftools openblas ssht yaml-cpp openpmd-api amrex@${AMREX_VER} ~cuda
-RUN spack -e $SPACK_ENV_NAME develop -p $BASE/amrex~cuda amrex @${AMREX_VER} ~cuda
+#RUN spack -e $SPACK_ENV_NAME add netlib-lapack gsl silo+hdf5 hdf5+hl+fortran+cxx+mpi mpich openssl fftw papi protobuf hwloc adios2+hdf5 boost+system+filesystem googletest gperftools openblas ssht yaml-cpp openpmd-api+python amrex@${AMREX_VER} ~cuda
+#RUN spack -e $SPACK_ENV_NAME develop -p $BASE/amrex~cuda amrex @${AMREX_VER} ~cuda
 
-RUN spack -e $SPACK_ENV_NAME concretize -f
-RUN spack -e $SPACK_ENV_NAME install --fail-fast
+#RUN spack -e $SPACK_ENV_NAME concretize -f
+#RUN spack -e $SPACK_ENV_NAME install --fail-fast
 
 COPY mk-cfg.sh .
-RUN bash ./mk-cfg.sh
+#RUN bash ./mk-cfg.sh
 
 USER etuser
 WORKDIR /usr/etuser
 COPY sim.tgz .
 COPY build-cactus-tarball.sh .
-RUN bash ./build-cactus-tarball.sh
 USER root
 
 # Set up slurm
@@ -120,5 +120,19 @@ COPY relink.sh /
 RUN apt install sudo -y && useradd -m admin -s /usr/bin/bash -d /home/admin && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 COPY start-ldap.sh /usr/local/bin/
 COPY etsetup.py /usr/local/lib/python${PYVER}/dist-packages/
-RUN chmod 755 /usr/etuser/Cactus.tar.gz
+#RUN chmod 755 /usr/etuser/Cactus.tar.gz
+#RUN chmod 755 /usr/etuser
+
+USER root
+RUN curl -LO https://github.com/visit-dav/visit/releases/download/v3.4.2/visit3_4_2.linux-x86_64-ubuntu22.tar.gz
+RUN curl -LO https://github.com/visit-dav/visit/releases/download/v3.4.2/visit-install3_4_2
+RUN echo 1 > /tmp/one
+RUN bash ./visit-install3_4_2 3.4.2 linux-x86_64-ubuntu22 /usr/local/visit < /tmp/one
+USER etuser
+WORKDIR /usr/etuser
+COPY einsteintoolkit-workshop.th /usr/etuser/einsteintoolkit-workshop.th
+#RUN bash ./build-cactus-tarball.sh
+#RUN chmod 755 /usr/etuser/Cactus.tar.gz
 RUN chmod 755 /usr/etuser
+COPY emitcactus.tgz /usr/etuser/EmitCactus.tar.gz
+USER root

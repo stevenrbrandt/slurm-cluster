@@ -15,15 +15,15 @@ cd
 # BUILD CACTUS
 curl -kLO https://raw.githubusercontent.com/gridaphobe/CRL/${ET_RELEASE}/GetComponents
 chmod a+x GetComponents
-./GetComponents --parallel https://bitbucket.org/einsteintoolkit/manifest/raw/${ET_RELEASE}/einsteintoolkit.th
+./GetComponents --parallel ~etuser/einsteintoolkit-workshop.th
 cd ~/Cactus
 echo slurmjupyter > ~/.hostname
 ./simfactory/bin/sim setup-silent
 tar xzvf ~etuser/sim.tgz
-cp /local-cpu.cfg simfactory/mdb/optionlists/slurmjupyter.cfg
 #echo 'LIBDIRS = /lib/x86_64-linux-gnu' >> repos/simfactory2/mdb/optionlists/generic.cfg
-export LD_LIBRARY_PATH=/lib/x86_64-linux-gnu
-./simfactory/bin/sim build -j$(($NCPUS/2)) --thornlist ../einsteintoolkit.th
+#export LD_LIBRARY_PATH=/lib/x86_64-linux-gnu
+eval $(spack env activate --sh cactus-tutorial)
+./simfactory/bin/sim build -j$(($NCPUS/2)) --thornlist ~etuser/einsteintoolkit-workshop.th
 
 # Override for the machine that we want
 cp simfactory/mdb/runscripts/slurmjupyter.run configs/sim/RunScript
@@ -42,4 +42,4 @@ find configs/sim -name \*.defn -exec bash -c "$SED_IN_PLACE" '{}' \;
 tar --exclude etk1.cct.lsu.edu.ini --exclude defs.local.ini -czf ../${PWD##*/}.tar.gz ../${PWD##*/}
 
 cd
-rm -fr Cactus CactusSourceJar.git  GetComponents  einsteintoolkit.th
+rm -fr Cactus CactusSourceJar.git  GetComponents  einsteintoolkit.th einsteintoolkit-workshop.th

@@ -17,3 +17,11 @@ services:
     #volumes:
     #  - home_cluster:/home
     entrypoint: sleep infinity
+
+#  tarball-service:
+#    build:
+#        context: .
+#        dockerfile: Dockerfile2
+#    image: et-tarball
+#    container_name: cluster-tarball
+#    entrypoint: sleep infinity

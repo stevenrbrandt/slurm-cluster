@@ -15,11 +15,20 @@ do
         cp /home/munge.key /etc/munge/munge.key
         fi
     fi
-    for f in passwd shadow group
-    do
-        if ! diff /home/$f /etc/$f > /dev/null; then
-            cp /home/$f /etc/$f
-        fi
-    done
+    if [ "$(hostname)" = "slurmjupyter" ]; then
+        for f in passwd shadow group
+        do
+            if ! diff /home/$f /etc/$f > /dev/null; then
+                cp /etc/$f /home/$f
+            fi
+        done
+    else
+        for f in passwd shadow group
+        do
+            if ! diff /home/$f /etc/$f > /dev/null; then
+                cp /home/$f /etc/$f
+            fi
+        done
+    fi
     sleep 20
 done

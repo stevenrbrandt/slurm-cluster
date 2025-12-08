@@ -1,3 +1,9 @@
+What is going on with a node in my swarm?
+    docker node ls
+    docker node inspect --pretty et-cluster_slurm-jupyter
+    docker service ls
+    docker service ps et-cluster_slurm-node2 --no-trunc
+
 munge is very important to get right or slurm won't work. For this purpose, relink.sh now distributes the munge key as well as passwd, group, and shadow.
 
 If a user's login gets corrupted and they can't get on the system:
@@ -14,3 +20,10 @@ Will spit out a command that can be used by worker nodes to join the swarm.
 The "head node" will have to do this:
 
   docker node update --label-add node.type=head etk1.cct.lsu.edu
+
+Unresponsive node fix:
+  
+  On the node: docker swarm leave && docker swarm join --token SWMTKN-1-3yob54agu3hrjxfngmurtirobhch35momom7hvgov08we4h1o1-a6l9ov4ae179ilnfrh090yriv 130.39.21.211:2377
+  On the head node:
+    docker node ls # identify and remove inactive copies of nodes
+    docker node update --label-add node.type=node3 etk4.cct.lsu.edu # relabel the node

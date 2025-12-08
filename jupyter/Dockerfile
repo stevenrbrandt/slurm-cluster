@@ -44,6 +44,8 @@ COPY ein.png /usr/local/share/jupyterhub/static/images/ein.png
 RUN curl -L https://raw.githubusercontent.com/stevenrbrandt/workenv/master/bin/untar.py -o /usr/local/bin/untar.py
 RUN chmod 755 /usr/local/bin/untar.py
 
+COPY kernel.json /usr/local/share/jupyter/kernels/python3/kernel.json
+
 #COPY --chown=munge munge.key /etc/munge/munge.key
 #RUN chmod 400  /etc/munge/munge.key
 CMD ["bash","/startup.sh"]

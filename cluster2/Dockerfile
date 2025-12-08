@@ -136,3 +136,4 @@ COPY einsteintoolkit-workshop.th /usr/etuser/einsteintoolkit-workshop.th
 RUN chmod 755 /usr/etuser
 COPY emitcactus.tgz /usr/etuser/EmitCactus.tar.gz
 USER root
+COPY make_cactus_tarball.sh /usr/local/bin/

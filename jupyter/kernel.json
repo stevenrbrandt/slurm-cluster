@@ -1,0 +1,18 @@
+{
+ "argv": [
+  "python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "Python 3 (ipykernel)",
+ "language": "python",
+ "metadata": {
+  "debugger": true
+ },
+ "env": {
+   "LD_LIBRARY_PATH": "/home/etuser/spack-root/var/spack/environments/cactus-tutorial/.spack-env/view/lib64:/home/etuser/spack-root/var/spack/environments/cactus-tutorial/.spack-env/view/lib",
+   "PYTHONPATH": "/home/etuser/spack-root/var/spack/environments/cactus-tutorial/.spack-env/view/lib/python3.11/site-packages"
+ }
+}

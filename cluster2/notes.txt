@@ -23,7 +23,7 @@ The "head node" will have to do this:
 
 Unresponsive node fix:
   
-  On the node: docker swarm leave && docker swarm join --token SWMTKN-1-3yob54agu3hrjxfngmurtirobhch35momom7hvgov08we4h1o1-a6l9ov4ae179ilnfrh090yriv 130.39.21.211:2377
+  On the node: docker swarm leave && docker swarm join --token SWMTKN-1-3yob54agu... 130.39.21.211:2377
   On the head node:
     docker node ls # identify and remove inactive copies of nodes
     docker node update --label-add node.type=node3 etk4.cct.lsu.edu # relabel the node

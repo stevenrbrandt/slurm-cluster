@@ -1,5 +1,5 @@
 #FROM ubuntu:20.04
-FROM et-cluster
+FROM stevenrbrandt/et-cluster
 
 ARG DEBIAN_FRONTEND=noninteractive
 #RUN apt install slurm-client -y
@@ -48,4 +48,5 @@ COPY kernel.json /usr/local/share/jupyter/kernels/python3/kernel.json
 
 #COPY --chown=munge munge.key /etc/munge/munge.key
 #RUN chmod 400  /etc/munge/munge.key
+COPY slurm.conf /etc/slurm/
 CMD ["bash","/startup.sh"]

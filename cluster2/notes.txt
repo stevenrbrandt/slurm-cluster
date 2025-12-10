@@ -27,3 +27,6 @@ Unresponsive node fix:
   On the head node:
     docker node ls # identify and remove inactive copies of nodes
     docker node update --label-add node.type=node3 etk4.cct.lsu.edu # relabel the node
+
+Docker buildx:
+

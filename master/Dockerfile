@@ -1,5 +1,5 @@
 #FROM ubuntu:20.04
-FROM et-cluster
+FROM stevenrbrandt/et-cluster
 
 #ARG DEBIAN_FRONTEND=noninteractive
 #RUN apt install slurmd slurm-client slurmctld -y
@@ -9,7 +9,7 @@ FROM et-cluster
 
 #COPY slurm.conf /etc/slurm/
 #COPY cgroup.conf /etc/slurm/
-COPY docker-entrypoint.sh /etc/slurm/
+#COPY docker-entrypoint.sh /etc/slurm/
 #COPY relink.sh /
 
 EXPOSE 6817 6818 6819 3306 

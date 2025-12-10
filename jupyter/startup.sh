@@ -15,6 +15,7 @@ then
    cp /install/private/etk.cct.lsu.edu.key /etc/ssl/private/etk.cct.lsu.edu.key
 fi
 
+cp /home/etuser/slurm.conf /etc/slurm/slurm.conf
 sudo service munge start
 randpass MND | grep pass: | cut -f2 -d: | sed 's/\s//g' > /usr/enable_mkuser
 echo "STARTUP CODE: $(cat /usr/enable_mkuser)"

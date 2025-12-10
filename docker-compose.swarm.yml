@@ -66,6 +66,10 @@ services:
                 - /etk/home:/home
         #links:
         #        - slurmmaster
+        #ports:
+        #        - 6817:6817
+        #        - 6818:6818
+        #        - 6819:6819
   slurm-node2:
         image: stevenrbrandt/slurm-node
         container_name: node2
@@ -83,6 +87,10 @@ services:
                 - /etk/home:/home
         #links:
         #        - slurmmaster
+        #ports:
+        #        - 6817:6817
+        #        - 6818:6818
+        #        - 6819:6819
   slurm-node3:
         image: stevenrbrandt/slurm-node
         container_name: node3
@@ -100,6 +108,10 @@ services:
                 - /etk/home:/home
         #links:
         #        - slurmmaster
+        #ports:
+        #        - 6817:6817
+        #        - 6818:6818
+        #        - 6819:6819
 volumes:
     shared-vol:
 

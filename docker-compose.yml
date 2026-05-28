@@ -56,6 +56,21 @@ services:
         #        - 6817:6817
         #        - 6818:6818
         #        - 6819:6819
+  slurmnode0:
+        build:
+            context: node
+            dockerfile: Dockerfile
+        image: stevenrbrandt/slurm-node
+        container_name: node0
+        hostname: slurmnode0
+        user: admin
+        env_file:
+            - ldap-vars.env
+        volumes:
+                #- shared-vol:/home
+                - /srv/nfs4/etk/home:/home
+        links:
+                - slurmmaster
   slurmnode1:
         build:
             context: node

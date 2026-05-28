@@ -28,5 +28,9 @@ Unresponsive node fix:
     docker node ls # identify and remove inactive copies of nodes
     docker node update --label-add node.type=node3 etk4.cct.lsu.edu # relabel the node
 
+Note that docker swarm networking usually gives every node 2 ip addresses, a good one and a bad one. We have to build our own /etc/hosts file dynamically at runtime using relink.sh to limit ourselves to the good addresses.
+
+The slurm.conf is in /home/etuser/slurm.conf. Edit it there to exactly match the nodes in production, then restart with r0.sh.
+
 Docker buildx:
 

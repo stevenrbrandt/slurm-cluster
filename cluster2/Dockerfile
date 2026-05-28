@@ -5,8 +5,8 @@ ENV PYVER 3.11
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update per release
-ENV ET_RELEASE ET_2024_11
-ENV KUIBIT_RELEASE 1.4.0
+#ENV ET_RELEASE ET_2024_11
+#ENV KUIBIT_RELEASE 1.4.0
 
 # Including --no-install-recommends does help optimize
 # the size of the image, but it makes it much harder to
@@ -44,7 +44,7 @@ RUN pip3 install jupyter \
     h5py \
     dumb-init \
     celluloid \
-    kuibit==1.5.0 \
+    kuibit==1.6.1 \
     termcolor \
     scons \
     clang_format \
